@@ -1,6 +1,7 @@
 #ifndef HTTP_H
 #define HTTP_H
 
+//网络连接
 #include <QObject>
 #include<QNetworkAccessManager>
 #include<QNetworkReply>

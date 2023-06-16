@@ -15,8 +15,8 @@ Item {
         visible: false
         width: parent.width
         height: parent.height
-        fillMode: Image.PreserveAspectCrop
-        antialiasing: true
+        fillMode: Image.PreserveAspectCrop  //设置填充模式为保持纵横比并裁剪多余部分
+        antialiasing: true  //开启抗锯齿
     }
 
     Rectangle{

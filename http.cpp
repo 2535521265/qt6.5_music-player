@@ -1,6 +1,6 @@
 #include "http.h"
 
-
+//网络连接
 Http::Http(QObject *parent)
     : QObject{parent}
 {

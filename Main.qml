@@ -15,24 +15,8 @@ ApplicationWindow {
     title: qsTr("音乐播放器")
 
     Http{
-           id:http
-       }
-
-       Component.onCompleted: {
-           textHttp()
-       }
-
-       function textHttp(){
-           function onReply(reply){
-               console.log(reply)
-               http.onReplySignal.disconnect(onReply)
-
-           }
-
-           http.onReplySignal.connect(onReply)
-           http.connet("banner")
-             }
-
+        id:http
+    }
 
 
     ColumnLayout{
@@ -55,7 +39,7 @@ ApplicationWindow {
     }
 
     //实现无边框
-    flags: Qt.Window|Qt.FramelessWindowHint
+//    flags: Qt.Window|Qt.FramelessWindowHint
 
     //实现鼠标拖动窗口
 //    DragHandler{

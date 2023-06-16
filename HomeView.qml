@@ -6,6 +6,9 @@ import QtQml
 
 RowLayout{
 
+
+    spacing: 0 //取消元素间的间隔
+
     property var qmlList: [
         {icon:"recommend-white",value:"推荐内容",qml:"DetailRecommendPageView"},
         {icon:"cloud-white",value:"搜索音乐",qml:"DetailSearchPageView"},
@@ -33,11 +36,11 @@ RowLayout{
 
             Item{
                 Layout.fillWidth: true
-                Layout.preferredHeight: 150
+                Layout.preferredHeight: 180
                 MusicRoundImage{
                     anchors.centerIn:parent  //放在中心
-                    height: 100
-                    width:100
+                    height: 130
+                    width:130
                     borderRadius: 100
                 }
             }
@@ -54,7 +57,7 @@ RowLayout{
                 highlight:Rectangle{ //首模块默认颜色
                     color: "#aa73a7db"
                 }
-                highlightMoveDuration: 0    //鼠标移动高亮持续时间
+                highlightMoveDuration: 500    //鼠标移动高亮持续时间
                 highlightResizeDuration: 0  //高亮持续时间
             }
         }

@@ -34,7 +34,8 @@ qt_add_qml_module(appmusic_player
     DetailLocalPageView.qml
     DetailHistoryPageView.qml
     DetailFavoritePageView.qml
-
+    MusicBannerView.qml
+    MusicGridView.qml
 )
 
 target_compile_features(appmusic_player PRIVATE cxx_std_20)
