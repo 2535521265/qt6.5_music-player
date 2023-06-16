@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import myhttp 1.0
+import QtMultimedia
 //主界面
 ApplicationWindow {
 
@@ -37,6 +38,11 @@ ApplicationWindow {
         }
 
     }
+
+    MediaPlayer{
+           id:mediaPlayer
+           audioOutput: AudioOutput{}
+       }
 
     //实现无边框
 //    flags: Qt.Window|Qt.FramelessWindowHint
