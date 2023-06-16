@@ -12,6 +12,7 @@ target_sources(appmusic_player
     PRIVATE
         main.cpp
         images.qrc
+        http.h http.cpp
         
     PUBLIC
         
@@ -21,7 +22,19 @@ qt_add_qml_module(appmusic_player
     URI music_player
     VERSION 1.0
     QML_FILES 
-        Main.qml
+    Main.qml
+    TopView.qml
+    BottomView.qml
+    HomeView.qml
+    MusicIconButton.qml
+    MusicToolButton.qml
+    MusicRoundImage.qml
+    DetailRecommendPageView.qml
+    DetailSearchPageView.qml
+    DetailLocalPageView.qml
+    DetailHistoryPageView.qml
+    DetailFavoritePageView.qml
+
 )
 
 target_compile_features(appmusic_player PRIVATE cxx_std_20)
