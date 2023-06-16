@@ -22,7 +22,7 @@ ColumnLayout{
     RowLayout{
            id:cen
            width: 520
-           anchors.centerIn:top
+//           anchors.centerIn:top //类型不对
            Layout.fillWidth: true
            TextField{
                id:searchInput
@@ -42,7 +42,7 @@ ColumnLayout{
                    radius: 10
                }
                focus: true
-               Keys.onPressed: if(event.key===Qt.Key_Enter||event.key===Qt.Key_Return)doSearch()
+               Keys.onPressed: if(event.key===Qt.Key_Enter||event.key===Qt.Key_Return)doSearch()//快捷键
            }
            MusicIconButton{
                iconSource:"qrc:/images/search"
@@ -72,7 +72,8 @@ ColumnLayout{
                                                             id:item.id,
                                                             name:item.name,
                                                             artist:item.artists[0].name,
-                                                            album:item.album.name
+                                                            album:item.album.name,
+                                                            cover:""
                                                         }
                                                     })
         }

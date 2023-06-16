@@ -3,6 +3,8 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import myhttp 1.0
 import QtMultimedia
+import Qt.labs.settings
+
 //主界面
 ApplicationWindow {
 
@@ -19,6 +21,10 @@ ApplicationWindow {
         id:http
     }
 
+    Settings{
+        id:settings
+        fileName: "conf/settings.ini"
+    }
 
     ColumnLayout{
         anchors.fill: parent
@@ -42,6 +48,16 @@ ApplicationWindow {
     MediaPlayer{
            id:mediaPlayer
            audioOutput: AudioOutput{}
+
+           onPositionChanged: {    //音乐进度和进度条同步
+               bottomView.setSlider(0,duration,mediaPlayer.position)
+           }
+
+           onPlaybackStateChanged: {     //辅助切换上一首，下一首
+               if(playbackState===MediaPlayer.StoppedState&&bottomView.playBackStateChangeCallbackEnabled)
+                   bottomView.playNext()
+
+           }
        }
 
     //实现无边框

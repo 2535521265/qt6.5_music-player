@@ -34,7 +34,7 @@ Frame{
         }
         delegate: listViewDelegate
         ScrollBar.vertical: ScrollBar{
-            anchors.right: parent.height
+            anchors.right: parent.right
 
         }
         header: listViewHeader
@@ -122,7 +122,11 @@ Frame{
                             iconHeight: 16
                             iconWidth: 16
                             toolTip: "播放"
-                            onClicked: playMusic(index)
+                            onClicked: {
+                                bottomView.current=-1
+                                bottomView.playList=musicList                               
+                                bottomView.current=index
+                            }
                         }
                         MusicIconButton{
                             iconSource: "qrc:/images/favorite"
@@ -264,19 +268,4 @@ Frame{
         }
     }
 
-    function playMusic(index=0){//播放按钮
-        if(musicList.length<1)return
-        var id=musicList[index].id
-        if(!id)return
-        function onReply(reply){
-            http.onReplySignal.disconnect(onReply)
-            var url = JSON.parse(reply).data[0].url
-            if(!url)return
-            mediaPlayer.source=url
-            mediaPlayer.play()
-        }
-
-        http.onReplySignal.connect(onReply)
-        http.connet("song/url?id="+id)//接口
-    }
 }
