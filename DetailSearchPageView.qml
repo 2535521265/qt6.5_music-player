@@ -5,19 +5,23 @@ import QtQuick.Layouts
 ColumnLayout{
      Layout.fillWidth: true
      Layout.fillHeight: true
-    Rectangle {
-        Layout.fillWidth: true
-        width: parent.width
-        height: 60
-        color:"#00000000"
-        Text {
-            x:10
-            verticalAlignment: Text.AlignBottom
-            text: qsTr("搜索音乐")
-            font.family: "微软雅黑"
-            font.pointSize: 25
-        }
-    }
+     Rectangle {
+         Layout.fillWidth: true
+         width: parent.width
+         height: 50
+         color: "#00000000"
+
+         Text {
+             width: parent.width
+             height: parent.height
+             verticalAlignment: Text.AlignVCenter  //字体上下居中
+             horizontalAlignment: Text.AlignHCenter  //字体左右居中
+
+             text: qsTr("搜索音乐")
+             font.family: "微软雅黑"
+             font.pointSize: 20
+         }
+     }
 
     RowLayout{
            id:cen
@@ -47,6 +51,7 @@ ColumnLayout{
            MusicIconButton{
                iconSource:"qrc:/images/search"
                toolTip: "搜索"
+
                onClicked:doSearch()
            }
        }
