@@ -5,6 +5,14 @@ import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.12
 
 ColumnLayout{
+    property string targetId: ""
+    property string targetType: "10"//album,playList/detail
+    property string name: "-"
+
+    onTargetIdChanged:{
+                           if(targetType=="10") loadAlbum()
+                           else if(targetType=="1000") loadPlayList()
+    }
 
     Rectangle{
 
@@ -15,7 +23,7 @@ ColumnLayout{
         Text {
             x:10
             verticalAlignment: Text.AlignBottom
-            text: qsTr("专辑/歌单")
+            text: qsTr(targetType=="10"?"专辑":"歌单")+name
             font.family: "微软雅黑"
             font.pointSize: 25
         }
@@ -28,6 +36,7 @@ ColumnLayout{
             id:playListCover
             width: 180
             height: 180
+            Layout.leftMargin: 15
             imgSrc: "https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
         }
 
@@ -38,7 +47,7 @@ ColumnLayout{
             Text{
                 id:playListDesc
                 text:"https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpghttps://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpghttps://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpghttps://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
-                width: parent.width
+                width: parent.width*0.95
                 anchors.centerIn: parent
                 wrapMode: Text.WrapAnywhere
                 font.family: "微软雅黑"
@@ -53,6 +62,63 @@ ColumnLayout{
     MusicListView{
         id:playListListView
     }
+
+    function loadAlbum(){
+
+        var url = "album?id="+(targetId.length<1?"32311":targetId)
+        function onReply(reply){
+            http.onReplySignal.disconnect(onReply)
+            var album =JSON.parse(reply).album
+            var songs =JSON.parse(reply).songs
+            playListCover.imgSrc = album.blurPicUrl
+            playListDesc.text = album.description
+            name = "-"+album.name
+            playListListView.musicList=songs.map(item=>{
+                                                     return{
+                                                         id:item.id,
+                                                         name:item.name,
+                                                         artist:item.ar[0].name,
+                                                         album:item.al.name
+                                                     }
+                                                 })
+        }
+        http.onReplySignal.connect(onReply)
+        http.connet(url)
+    }
+    function loadPlayList(){
+
+        var url = "playList/detail?id="+(targetId.length<1?"32311":targetId)
+        function onSongDetailReply(reply){
+            http.onReplySignal.disconnect(onSongDetailReply)
+            console.log(reply)
+            var songs =JSON.parse(reply).songs
+
+            playListListView.musicList=songs.map(item=>{
+                                                     return{
+                                                         id:item.id,
+                                                         name:item.name,
+                                                         artist:item.ar[0].name,
+                                                         album:item.al.name
+                                                     }
+                                                 })
+        }
+        function onReply(reply){
+            http.onReplySignal.disconnect(onReply)
+            var playlist =JSON.parse(reply).playlist
+            playListCover.imgSrc = playlist.coverImgUrl
+            playListDesc.text = playlist.description
+            name = "-"+playlist.name
+            var ids = playlist.trackIds.map(item=>item.id).join(",")
+
+            http.onReplySignal.connect(onSongDetailReply)
+            http.connet("song/detail?ids="+ids)
+        }
+
+        http.onReplySignal.connect(onReply)
+        http.connet(url)
+
+    }
+
 
 }
 

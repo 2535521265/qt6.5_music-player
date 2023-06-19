@@ -6,9 +6,8 @@ import QtQml
 
 RowLayout{
 
-
     spacing: 0 //取消元素间的间隔
-
+    property int defaultIndex: 0
     property var qmlList: [
         {icon:"recommend-white",value:"推荐内容",qml:"DetailRecommendPageView",menu:true},
         {icon:"cloud-white",value:"搜索音乐",qml:"DetailSearchPageView",menu:true},
@@ -103,6 +102,7 @@ RowLayout{
                         color="#AA00AAAA"
                     }
                     onClicked:{//实现鼠标点击切换不同ui
+                        hidePlayList()
                         repeater.itemAt(menuViewDelegateItem.ListView.view.currentIndex).visible =false
                         menuViewDelegateItem.ListView.view.currentIndex = index
                         var loader = repeater.itemAt(menuViewDelegateItem.ListView.view.currentIndex)
@@ -114,12 +114,10 @@ RowLayout{
         }
 
         Component.onCompleted: {
-//            menuViewModel.append(qmlList.filter(item=>item.menu))
-//            var loader = repeater.itemAt(0)
-//            loader.visible=true
-//            loader.source = qmlList[0].qml+".qml"
-
-            showPlayList()
+            menuViewModel.append(qmlList.filter(item=>item.menu))
+            var loader = repeater.itemAt(0)
+            loader.visible=true
+            loader.source = qmlList[0].qml+".qml"
         }
     }
 
@@ -133,15 +131,17 @@ RowLayout{
         }
     }
 
-    function showPlayList(){
-        //        repeater.itemAt(menuView.currentIndex).visible = false
+    function showPlayList(targetId="",targetType="10"){
+        repeater.itemAt(menuView.currentIndex).visible = false
         var loader = repeater.itemAt(5)
         loader.visible = true
         loader.source = qmlList[5].qml+".qml"
+        loader.item.targetType=targetType
+        loader.item.targetId=targetId
     }
 
     function hidePlayList(){
-        //        repeater.itemAt(menuView.currentIndex).visible = true
+        repeater.itemAt(menuView.currentIndex).visible = true
         var loader = repeater.itemAt(5)
         loader.visible = false
     }

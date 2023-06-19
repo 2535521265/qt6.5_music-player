@@ -53,8 +53,13 @@ Item {
                     onExited: {
                         background.color = "#00000000"
                     }
+                    onClicked: {
+                        var item = gridRepeator.model[index]
+                        homeView.showPlayList(item.id,"1000")
+                        }
+
+                    }
                 }
             }
-        }
     }
 }
