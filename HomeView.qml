@@ -10,12 +10,12 @@ RowLayout{
     spacing: 0 //取消元素间的间隔
 
     property var qmlList: [
-        {icon:"recommend-white",value:"推荐内容",qml:"DetailRecommendPageView"},
-        {icon:"cloud-white",value:"搜索音乐",qml:"DetailSearchPageView"},
-        {icon:"local-white",value:"本地音乐",qml:"DetailLocalPageView"},
-        {icon:"history-white",value:"播放历史",qml:"DetailHistoryPageView"},
-        {icon:"favorite-big-white",value:"我喜欢的",qml:"DetailFavoritePageView"},
-        //{icon:"favorite-big-white",value:"专辑歌单",qml:"DetailPlayListPageView"}
+        {icon:"recommend-white",value:"推荐内容",qml:"DetailRecommendPageView",menu:true},
+        {icon:"cloud-white",value:"搜索音乐",qml:"DetailSearchPageView",menu:true},
+        {icon:"local-white",value:"本地音乐",qml:"DetailLocalPageView",menu:true},
+        {icon:"history-white",value:"播放历史",qml:"DetailHistoryPageView",menu:true},
+        {icon:"favorite-big-white",value:"我喜欢的",qml:"DetailFavoritePageView",menu:true},
+        {icon:"",value:"专辑/歌单",qml:"DetailPlayListPageView",menu:false}
     ]
 
 
@@ -114,10 +114,12 @@ RowLayout{
         }
 
         Component.onCompleted: {
-            menuViewModel.append(qmlList)
-            var loader = repeater.itemAt(0)
-            loader.visible=true
-            loader.source = qmlList[0].qml+".qml"
+//            menuViewModel.append(qmlList.filter(item=>item.menu))
+//            var loader = repeater.itemAt(0)
+//            loader.visible=true
+//            loader.source = qmlList[0].qml+".qml"
+
+            showPlayList()
         }
     }
 
@@ -129,6 +131,19 @@ RowLayout{
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
+    }
+
+    function showPlayList(){
+        //        repeater.itemAt(menuView.currentIndex).visible = false
+        var loader = repeater.itemAt(5)
+        loader.visible = true
+        loader.source = qmlList[5].qml+".qml"
+    }
+
+    function hidePlayList(){
+        //        repeater.itemAt(menuView.currentIndex).visible = true
+        var loader = repeater.itemAt(5)
+        loader.visible = false
     }
 
 }

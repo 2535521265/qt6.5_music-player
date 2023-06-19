@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+//轮播图实现
 Frame{
     property int current: 0
     property alias bannerList : bannerView.model

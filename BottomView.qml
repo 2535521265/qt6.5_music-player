@@ -7,9 +7,9 @@ Rectangle{
 
     property var playList: []
     property int current: -1
-     property int sliderValue: 0
+    property int sliderValue: 0
     property int sliderFrom: 0
-     property int sliderTo: 100
+    property int sliderTo: 100
     property int currentPlayMode: 0
     property var playModeList: [{icon:"/single-repeat.png",name:"循环播放"},{icon:"/repeat.png",name:"顺序播放"},{icon:"/random.png",name:"随机播放"}]
     property bool playBackStateChangeCallbackEnabled: false
@@ -59,7 +59,7 @@ Rectangle{
                 to: sliderTo
                 //拖动进度条跳转
                 onMoved: {
-                   mediaPlayer.position=value
+                    mediaPlayer.position=value
                 }
 
                 height: 30
@@ -110,12 +110,12 @@ Rectangle{
             }
         }
 //        MusicIconButton{
-//                    Layout.preferredWidth: 50
-//                    text: "词"//找到图后补充上去就删除这行
-//                    //icon.source: "qrc:/images/repeat.png"
-//                    toolTip: "歌词"
-//                }
-      //词：图
+//            Layout.preferredWidth: 50
+//            text: "词"//找到图后补充上去就删除这行
+//            //icon.source: "qrc:/images/repeat.png"
+//            toolTip: "歌词"
+//        }
+
         MusicRoundImage{
             width: 50
             height: 50
@@ -142,7 +142,7 @@ Rectangle{
 
     Component.onCompleted: {
         //从配置文件中拿到currentPlayMode
-         currentPlayMode=settings.value("currentPlayMode",0)
+        currentPlayMode=settings.value("currentPlayMode",0)
     }
 
     onCurrentChanged: {
@@ -156,7 +156,7 @@ Rectangle{
         switch(currentPlayMode){
         case 0:
         case 1:
-             current=(current+playList.length-1)%playList.length
+            current=(current+playList.length-1)%playList.length
             break
         case 2:{
             var random=parseInt(Math.random()*playList.length)
@@ -173,10 +173,10 @@ Rectangle{
         case 0:
             if(type==='natural')
                 mediaPlayer.play()
-                break
+            break
 
         case 1:
-             current=(current+1)%playList.length
+            current=(current+1)%playList.length
             break
         case 2:{
             var random=parseInt(Math.random()*playList.length)
@@ -203,7 +203,7 @@ Rectangle{
         var id=playList[current].id
 
         if(!id)return
-         //获取详情
+        //获取详情
         nameTxet.text=playList[current].name+"/"+playList[current].artist
 
         function onReply(reply){
@@ -261,7 +261,7 @@ Rectangle{
             if(cover)musicCover.imgSrc=url
         }
 
-       http.onReplySignal.connect(onReply)
-       http.connet("song/detail?ids="+id)//接口
+        http.onReplySignal.connect(onReply)
+        http.connet("song/detail?ids="+id)//接口
     }
 }
