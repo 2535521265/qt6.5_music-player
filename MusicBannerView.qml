@@ -56,10 +56,13 @@ Frame{
                         switch(targetType){
                         case "1":
                             //播放歌曲
+                            bottomView.current=-1
+                            bottomView.playList=[{id:targetId,name:"",artist:"",cover:"",album:""}]
+                            bottomView.current=0
                             break
                         case "10":
                             //打开专辑
-                            break
+//                            break
                         case "1000":
                             //打开播放列表
                             homeView.showPlayList(targetId,targetType)

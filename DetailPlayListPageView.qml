@@ -78,7 +78,8 @@ ColumnLayout{
                                                          id:item.id,
                                                          name:item.name,
                                                          artist:item.ar[0].name,
-                                                         album:item.al.name
+                                                         album:item.al.name,
+                                                         cover:item.al.picUrl
                                                      }
                                                  })
         }
@@ -98,7 +99,8 @@ ColumnLayout{
                                                          id:item.id,
                                                          name:item.name,
                                                          artist:item.ar[0].name,
-                                                         album:item.al.name
+                                                         album:item.al.name,
+                                                         cover:item.al.picUrl
                                                      }
                                                  })
         }

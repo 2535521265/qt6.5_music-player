@@ -36,7 +36,7 @@ RowLayout{
             Item{
                 Layout.fillWidth: true
                 Layout.preferredHeight: 180
-                MusicRoundImage{
+                MusicBorderImage{
                     anchors.centerIn:parent  //放在中心
                     height: 130
                     width:130
