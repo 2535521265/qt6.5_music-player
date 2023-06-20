@@ -42,6 +42,7 @@ qt_add_qml_module(appmusic_player
     MusicBorderImage.qml
     PageDetailView.qml
     MusicLyricsView.qml
+    MusicTextButton.qml
 )
 
 target_compile_features(appmusic_player PRIVATE cxx_std_20)

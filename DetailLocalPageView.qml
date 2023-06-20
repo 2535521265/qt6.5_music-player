@@ -1,21 +1,59 @@
-import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
+import QtQuick 2.12
+import QtQuick.Controls 2.5
+import QtQuick.Layouts 1.12
 
-Rectangle {
-    Layout.fillWidth: true
-    width: parent.width
-    height: 50
-    color: "#00000000"
+//本地音乐
+ColumnLayout{
 
-    Text {
+    Rectangle{
+
+        Layout.fillWidth: true
         width: parent.width
-        height: parent.height
-        verticalAlignment: Text.AlignVCenter  //字体上下居中
-        horizontalAlignment: Text.AlignHCenter  //字体左右居中
+        height: 60
+        color: "#00000000"
+        Text {
+            x:10
+            verticalAlignment: Text.AlignBottom
+            text: qsTr("本地音乐")
+            font.family: "微软雅黑"
+            font.pointSize: 25
+        }
+    }
 
-        text: qsTr("本地音乐")
-        font.family: "微软雅黑"
-        font.pointSize: 20
+    RowLayout{
+        height: 80
+        Item{
+            width: 5
+        }
+
+        MusicTextButton{
+            btnText: "添加本地音乐"
+            btnHeight: 50
+            btnWidth: 200
+            onClicked: {
+
+            }
+        }
+        MusicTextButton{
+            btnText: "刷新记录"
+            btnHeight: 50
+            btnWidth: 120
+            onClicked: {
+
+            }
+        }
+        MusicTextButton{
+            btnText: "清空记录"
+            btnHeight: 50
+            btnWidth: 120
+            onClicked: {
+
+            }
+        }
+
+    }
+
+    MusicListView{
+        id:localListView
     }
 }
