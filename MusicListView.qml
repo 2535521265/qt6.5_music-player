@@ -126,6 +126,7 @@ Frame{
                                 bottomView.current=-1
                                 bottomView.playList=musicList
                                 bottomView.current=index
+
                             }
                         }
                         MusicIconButton{
@@ -259,7 +260,6 @@ Frame{
                     checked: modelData===current
                     onClicked: {
                         if(current===index)return
-//                        current=index
                         loadMore(current*pageSize,index)
                     }
                 }

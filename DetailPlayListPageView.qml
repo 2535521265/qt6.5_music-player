@@ -37,7 +37,6 @@ ColumnLayout{
             width: 180
             height: 180
             Layout.leftMargin: 15
-            imgSrc: "https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
         }
 
         Item{
@@ -46,7 +45,6 @@ ColumnLayout{
 
             Text{
                 id:playListDesc
-                text:"https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpghttps://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpghttps://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpghttps://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
                 width: parent.width*0.95
                 anchors.centerIn: parent
                 wrapMode: Text.WrapAnywhere
@@ -91,7 +89,6 @@ ColumnLayout{
         var url = "playList/detail?id="+(targetId.length<1?"32311":targetId)
         function onSongDetailReply(reply){
             http.onReplySignal.disconnect(onSongDetailReply)
-            console.log(reply)
             var songs =JSON.parse(reply).songs
 
             playListListView.musicList=songs.map(item=>{

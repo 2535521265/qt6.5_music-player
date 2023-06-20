@@ -5,7 +5,6 @@ import QtMultimedia
 
 //底部工具栏
 Rectangle{
-
     property var playList: []
     property int current: -1
      property int sliderValue: 0
@@ -15,19 +14,15 @@ Rectangle{
     property var playModeList: [{icon:"/single-repeat.png",name:"循环播放"},{icon:"/repeat.png",name:"顺序播放"},{icon:"/random.png",name:"随机播放"}]
     property bool playBackStateChangeCallbackEnabled: false
     property string musicCover: "qrc/player"
-    property string musicName: "嘿嘿嘿"
+    property string musicName: ""
     property string musicArtist: ""
-
     property int playingState: 0
     Layout.fillWidth: true
     height: 60
     color: "#00AAAA"
 
-
-
     RowLayout{
         anchors.fill: parent
-
         Item{
             Layout.preferredWidth: parent.width/10  //边距
             Layout.fillWidth: true
@@ -119,16 +114,9 @@ Rectangle{
                 anchors.right: slider.right
                 anchors.bottom: slider.top
                 font.family: "微软雅黑"
-                color: "white"
+                color:  "white"
             }
         }
-//        MusicIconButton{
-//                    Layout.preferredWidth: 50
-//                    text: "词"//找到图后补充上去就删除这行
-//                    //icon.source: "qrc:/images/repeat.png"
-//                    toolTip: "歌词"
-//                }
-      //词：图
         MusicBorderImage{
             width: 50
             height: 45
@@ -156,12 +144,60 @@ Rectangle{
             icon.source: "qrc:/images/favorite.png"
             toolTip: "我喜欢"
         }
-        MusicIconButton{
+        MusicIconButton{  //
             Layout.preferredWidth: 50
             icon.source: "qrc:/images"+playModeList[currentPlayMode].icon
             toolTip: playModeList[currentPlayMode].name
             onClicked: changePlayMode()
         }
+        MusicIconButton{  //变速播放音乐
+            id:m
+            Layout.preferredWidth: 100
+            height: 200
+            text:"播放速度"
+            toolTip: "点击速度+0.25，默认为1,最大为2"
+            onClicked: {
+                mediaPlayer.playbackRate+=0.25
+                if(mediaPlayer.playbackRate===1){
+                    m.toolTip="1.0"
+                }
+                if(mediaPlayer.playbackRate===1.25){
+                      m.toolTip="1.25"
+                }
+                if(mediaPlayer.playbackRate===1.5){
+                     m.toolTip="1.5"
+                }
+                if(mediaPlayer.playbackRate===1.75){
+                    m.toolTip="1.75"
+                }
+                if(mediaPlayer.playbackRate===2.0){
+                    m.toolTip="2.0"
+                }
+                if(mediaPlayer.playbackRate>2.0){
+                    mediaPlayer.playbackRate=1.0
+                }
+            }
+        }
+
+        Row{     //音量调节           
+            Slider{
+                id:voice
+                from:0
+                to:100
+                value:50
+                orientation: Qt.Vertical
+                width: 10
+                height: 45
+                onValueChanged: {
+                    mediaPlayer.audioOutput.volume=value/100
+                }
+            }
+            Label{
+                text: "音量"+Math.round(voice.value)
+            }
+        }
+
+
         Item{
             Layout.preferredWidth: parent.width/10
             Layout.fillWidth: true
@@ -286,7 +322,7 @@ Rectangle{
 
     function getCover(id){
         function onReply(reply){
-            http.onReplySignal.disconnect(onReply())
+            http.onReplySignal.disconnect(onReply)
 
             //请求歌词
             getLyric(id)
@@ -304,33 +340,29 @@ Rectangle{
 
     //请求歌词
     function getLyric(id){
-        function onReply(reply){
-            http.onReplySignal.disconnect(onReply())
+            function onReply(reply){
+                http.onReplySignal.disconnect(onReply)
+                var lyric = JSON.parse(reply).lrc.lyric
 
-            var lyric=JSON.parse(reply).lrc.lyric
-            console.log(lyric)//无法打印歌词还是说没有歌词
+                console.log(lyric)
 
-            if(lyric.length<1)return
-            var lyrics=(lyric.replace(/\[.*\]/gi,"")).split("\n")
-            if(lyrics.length>0)
-                pageDetailView.lyrics=lyrics
-            var times=[]
-            lyric.replace(/\[.*\]/gi,function(match,index){
-                //match:[00:00:00]
-                if(match.length>2){
-                    var time=match.substr(1,match.length-2) //第二位到倒数第二位
-                    var arr=time.split(":")
-                    var timeValue=arr.length>0?parseInt(arr[0])*60*1000:0
-                    arr=arr.length>1?arr[1].split("."):[0,0]
-                    timeValue+=arr.length>0?parseInt(arr[0])*1000:0
-                    timeValue+=arr.length>1?parseInt(arr[1])*10:0
-                    times.push(timeValue)
-                }
-            })
-            mediaPlayer.times=times
+                if(lyric.length<1) return
+                var lyrics = (lyric.replace(/\[.*\]/gi,"")).split("\n")
+                if(lyrics.length>0) pageDetailView.lyrics = lyrics
+                var times = []
+                lyric.replace(/\[.*\]/gi,function(match,index){
+                    if(match.length>2){
+                        var time  = match.substr(1,match.length-2)
+                        var arr = time.split(":")
+                        var timeValue = arr.length>0? parseInt(arr[0])*60*1000:0
+                        arr = arr.length>1?arr[1].split("."):[0,0]
+                        timeValue += arr.length>0?parseInt(arr[0])*1000:0
+                        timeValue += arr.length>1?parseInt(arr[1])*10:0
+                        times.push(timeValue)
+                    }
+                })
+            }
+            http.onReplySignal.connect(onReply)
+            http.connet("lyric?id="+id)
         }
-
-       http.onReplySignal.connect(onReply)
-       http.connet("lyric?id="+id)//接口
-    }
 }
