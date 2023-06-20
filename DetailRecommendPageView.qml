@@ -7,11 +7,11 @@ ScrollView{
     clip: true  //裁剪超出组件的元素，
     ColumnLayout {
 
-//        Text {
-//            text: qsTr("推荐内容")
-//            font.family: "微软雅黑"
-//            font.pointSize: 18
-//        }
+        //        Text {
+        //            text: qsTr("推荐内容")
+        //            font.family: "微软雅黑"
+        //            font.pointSize: 18
+        //        }
 
         MusicBannerView{
             id:bannerView
@@ -37,9 +37,31 @@ ScrollView{
             id:musicView
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.preferredHeight: (window.width-250)*0.2*4+30*4+20
+            Layout.preferredHeight: (window.width-250)*0.2*4+30*4+20  //高度  刚好显示20个歌单
             Layout.bottomMargin: 20
+        }
 
+        Rectangle{
+
+            Layout.fillWidth: true
+            width: parent.width
+            height: 60
+            color: "#00000000"
+            Text {
+                x:10
+                verticalAlignment: Text.AlignBottom
+                text: qsTr("新歌推荐")
+                font.family: "微软雅黑"
+                font.pointSize: 25
+            }
+        }
+
+        MusicGridLatestView{
+            id:latestView
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.preferredHeight: (window.width-230)*0.1*10+20
+            Layout.bottomMargin: 20
         }
     }
 
@@ -64,9 +86,21 @@ ScrollView{
             http.onReplySignal.disconnect(onReply)
             var playlists = JSON.parse(reply).playlists
             musicView.list =playlists
+            getLatestList()
         }
         http.onReplySignal.connect(onReply)
-        http.connet("/top/playlist/highquality?limit=20")
-
+        http.connet("/top/playlist/highquality?limit=20") //显示20个歌单
     }
+
+    function getLatestList(){
+        function onReply(reply){
+            http.onReplySignal.disconnect(onReply)
+            var latestList = JSON.parse(reply).data
+            latestView.list =latestList.slice(0,30)
+        }
+
+        http.onReplySignal.connect(onReply)
+        http.connet("top/song")
+    }
+
 }

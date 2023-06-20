@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtMultimedia
 
 //底部工具栏
 Rectangle{
@@ -13,6 +14,11 @@ Rectangle{
     property int currentPlayMode: 0
     property var playModeList: [{icon:"/single-repeat.png",name:"循环播放"},{icon:"/repeat.png",name:"顺序播放"},{icon:"/random.png",name:"随机播放"}]
     property bool playBackStateChangeCallbackEnabled: false
+    property string musicCover: "qrc/player"
+    property string musicName: "嘿嘿嘿"
+    property string musicArtist: ""
+
+    property int playingState: 0
     Layout.fillWidth: true
     height: 60
     color: "#00AAAA"
@@ -34,8 +40,16 @@ Rectangle{
         }
         MusicIconButton{
             Layout.preferredWidth: 50
-            icon.source: "qrc:/images/stop.png"
+            icon.source: playingState===0?"qrc:/images/stop.png":"qrc:/images/pause.png"
             toolTip: "暂停/播放"
+            onClicked: {
+                if(!mediaPlayer.source)return
+                if(mediaPlayer.playbackState===MediaPlayer.PlayingState){
+                    mediaPlayer.pause()
+                }else if(mediaPlayer.playbackState===MediaPlayer.PausedState){
+                    mediaPlayer.play()
+                }
+            }
         }
         MusicIconButton{
             Layout.preferredWidth: 50
@@ -91,8 +105,7 @@ Rectangle{
             }
 
             Text {
-                id:nameTxet
-                text: qsTr("...")
+                text: musicName+"-"+musicArtist
                 anchors.left: slider.left
                 anchors.bottom: slider.top
                 anchors.leftMargin: 5
@@ -116,10 +129,26 @@ Rectangle{
 //                    toolTip: "歌词"
 //                }
       //词：图
-        MusicRoundImage{
+        MusicBorderImage{
             width: 50
-            height: 50
-            id:musicCover
+            height: 45
+            imgSrc: musicCover
+            MouseArea{
+                cursorShape: Qt.PointingHandCursor //?
+                anchors.fill: parent
+                onPressed: {
+                    musicCover.scale=0.9
+                }
+                onReleased: {
+                    musicCover.scale=1.0
+                }
+
+                onClicked: {
+                    pageDetailView.visible=!pageDetailView.visible
+                    homeView.visible=!homeView.visible
+
+                }
+            }
         }
 
         MusicIconButton{
@@ -204,7 +233,8 @@ Rectangle{
 
         if(!id)return
          //获取详情
-        nameTxet.text=playList[current].name+"/"+playList[current].artist
+        musicName=playList[current].name
+        musicArtist=playList[current].artist
 
         function onReply(reply){
             http.onReplySignal.disconnect(onReply)
@@ -221,7 +251,7 @@ Rectangle{
             if(cover.length<1){
                 getCover(id)
             }else{
-                musicCover.imgSrc=cover
+                musicCover=cover
             }
 
 
@@ -254,14 +284,53 @@ Rectangle{
         timeTxet.text=fr_mm+":"+fr_ss+"/"+to_mm+":"+to_ss
     }
 
-    function getCover(id){ //cover需要在playlist里面添加获取cover:item.al.picUrl
+    function getCover(id){
         function onReply(reply){
             http.onReplySignal.disconnect(onReply())
-            var cover=JSON.parse(reply).songs[0].al.picUrl
-            if(cover)musicCover.imgSrc=url
+
+            //请求歌词
+            getLyric(id)
+
+            var song=JSON.parse(reply).songs[0]
+            var cover=song.al.picUrl
+            musicCover=cover
+            if(musicName.length<1)musicName=song.name
+            if(musicArtist.length<1)musicArtist=song.artist
         }
 
        http.onReplySignal.connect(onReply)
        http.connet("song/detail?ids="+id)//接口
+    }
+
+    //请求歌词
+    function getLyric(id){
+        function onReply(reply){
+            http.onReplySignal.disconnect(onReply())
+
+            var lyric=JSON.parse(reply).lrc.lyric
+            console.log(lyric)//无法打印歌词还是说没有歌词
+
+            if(lyric.length<1)return
+            var lyrics=(lyric.replace(/\[.*\]/gi,"")).split("\n")
+            if(lyrics.length>0)
+                pageDetailView.lyrics=lyrics
+            var times=[]
+            lyric.replace(/\[.*\]/gi,function(match,index){
+                //match:[00:00:00]
+                if(match.length>2){
+                    var time=match.substr(1,match.length-2) //第二位到倒数第二位
+                    var arr=time.split(":")
+                    var timeValue=arr.length>0?parseInt(arr[0])*60*1000:0
+                    arr=arr.length>1?arr[1].split("."):[0,0]
+                    timeValue+=arr.length>0?parseInt(arr[0])*1000:0
+                    timeValue+=arr.length>1?parseInt(arr[1])*10:0
+                    times.push(timeValue)
+                }
+            })
+            mediaPlayer.times=times
+        }
+
+       http.onReplySignal.connect(onReply)
+       http.connet("lyric?id="+id)//接口
     }
 }

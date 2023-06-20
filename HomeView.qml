@@ -6,16 +6,15 @@ import QtQml
 
 RowLayout{
 
-
     spacing: 0 //取消元素间的间隔
-
+    property int defaultIndex: 0
     property var qmlList: [
-        {icon:"recommend-white",value:"推荐内容",qml:"DetailRecommendPageView"},
-        {icon:"cloud-white",value:"搜索音乐",qml:"DetailSearchPageView"},
-        {icon:"local-white",value:"本地音乐",qml:"DetailLocalPageView"},
-        {icon:"history-white",value:"播放历史",qml:"DetailHistoryPageView"},
-        {icon:"favorite-big-white",value:"我喜欢的",qml:"DetailFavoritePageView"},
-        //{icon:"favorite-big-white",value:"专辑歌单",qml:"DetailPlayListPageView"}
+        {icon:"recommend-white",value:"推荐内容",qml:"DetailRecommendPageView",menu:true},
+        {icon:"cloud-white",value:"搜索音乐",qml:"DetailSearchPageView",menu:true},
+        {icon:"local-white",value:"本地音乐",qml:"DetailLocalPageView",menu:true},
+        {icon:"history-white",value:"播放历史",qml:"DetailHistoryPageView",menu:true},
+        {icon:"favorite-big-white",value:"我喜欢的",qml:"DetailFavoritePageView",menu:true},
+        {icon:"",value:"专辑/歌单",qml:"DetailPlayListPageView",menu:false}
     ]
 
 
@@ -37,7 +36,7 @@ RowLayout{
             Item{
                 Layout.fillWidth: true
                 Layout.preferredHeight: 180
-                MusicRoundImage{
+                MusicBorderImage{
                     anchors.centerIn:parent  //放在中心
                     height: 130
                     width:130
@@ -103,6 +102,7 @@ RowLayout{
                         color="#AA00AAAA"
                     }
                     onClicked:{//实现鼠标点击切换不同ui
+                        hidePlayList()
                         repeater.itemAt(menuViewDelegateItem.ListView.view.currentIndex).visible =false
                         menuViewDelegateItem.ListView.view.currentIndex = index
                         var loader = repeater.itemAt(menuViewDelegateItem.ListView.view.currentIndex)
@@ -114,7 +114,7 @@ RowLayout{
         }
 
         Component.onCompleted: {
-            menuViewModel.append(qmlList)
+            menuViewModel.append(qmlList.filter(item=>item.menu))
             var loader = repeater.itemAt(0)
             loader.visible=true
             loader.source = qmlList[0].qml+".qml"
@@ -129,6 +129,21 @@ RowLayout{
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
+    }
+
+    function showPlayList(targetId="",targetType="10"){
+        repeater.itemAt(menuView.currentIndex).visible = false
+        var loader = repeater.itemAt(5)
+        loader.visible = true
+        loader.source = qmlList[5].qml+".qml"
+        loader.item.targetType=targetType
+        loader.item.targetId=targetId
+    }
+
+    function hidePlayList(){
+        repeater.itemAt(menuView.currentIndex).visible = true
+        var loader = repeater.itemAt(5)
+        loader.visible = false
     }
 
 }

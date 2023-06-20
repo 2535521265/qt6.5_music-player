@@ -38,6 +38,11 @@ ApplicationWindow {
 
         }
 
+        PageDetailView{
+            id:pageDetailView
+            visible: false
+        }
+
         BottomView{
             id:bottomView
 
@@ -49,13 +54,22 @@ ApplicationWindow {
            id:mediaPlayer
            audioOutput: AudioOutput{}
 
+           property var  times: []
+
            onPositionChanged: {    //音乐进度和进度条同步
                bottomView.setSlider(0,duration,mediaPlayer.position)
+               //歌词滚动
+               if(times.length>0){
+                   var count=times.filter(time=>time<position).length
+                   pageDetailView.current=(count===0)?0:count-1
+               }
            }
 
            onPlaybackStateChanged: {     //辅助切换上一首，下一首
+               bottomView.playingState=playbackState===MediaPlayer.PlayingState?1:0
                if(playbackState===MediaPlayer.StoppedState&&bottomView.playBackStateChangeCallbackEnabled)
                    bottomView.playNext()
+
 
            }
        }

@@ -124,7 +124,7 @@ Frame{
                             toolTip: "播放"
                             onClicked: {
                                 bottomView.current=-1
-                                bottomView.playList=musicList                               
+                                bottomView.playList=musicList
                                 bottomView.current=index
                             }
                         }
@@ -188,7 +188,6 @@ Frame{
                 }
                 Text{
                     text:"歌名"
-//                    horizontalAlignment: Qt.AlignHCenter
                     Layout.preferredWidth: parent.width*0.4
                     font.family: "微软雅黑"
                     font.pointSize: 13
@@ -226,9 +225,9 @@ Frame{
         }
     }
 
-    Item {
+    Item {  //分页器
         id: pageButton
-        visible: musicList.length!==0
+        visible: musicList.length!==0&&all!==0            //不显示分页
         width: parent.width
         anchors.top: listView.bottom
         height: 40

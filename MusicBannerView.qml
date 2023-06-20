@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+//轮播图实现
 Frame{
     property int current: 0
     property alias bannerList : bannerView.model
@@ -48,10 +49,30 @@ Frame{
                 cursorShape: Qt.PointingHandCursor  //鼠标悬停时的光标形状为手型
                 onClicked: { //点击实现切换轮播图
                     if(bannerView.currentIndex === index){
+                        var item = bannerView.model[index]
+                        var targetId = item.targetId+""
+                        var targetType = item.targetType+""
 
+                        switch(targetType){
+                        case "1":
+                            //播放歌曲
+                            bottomView.current=-1
+                            bottomView.playList=[{id:targetId,name:"",artist:"",cover:"",album:""}]
+                            bottomView.current=0
+                            break
+                        case "10":
+                            //打开专辑
+//                            break
+                        case "1000":
+                            //打开播放列表
+                            homeView.showPlayList(targetId,targetType)
+                            break
+                        }
+                        console.log(targetId,targetType)
                     }else{
                         bannerView.currentIndex = index
                     }
+
                 }
             }
         }
