@@ -6,17 +6,10 @@ import QtQuick.Layouts
 ScrollView{
     clip: true  //裁剪超出组件的元素，
     ColumnLayout {
-
-        //        Text {
-        //            text: qsTr("推荐内容")
-        //            font.family: "微软雅黑"
-        //            font.pointSize: 18
-        //        }
-
-        MusicBannerView{
+        MusicBannerView{    //主窗口的轮播图
             id:bannerView
-            Layout.preferredWidth: window.width-200 //轮播图长度
-            Layout.preferredHeight: (window.width-200)*0.3  //轮播图宽度
+            Layout.preferredWidth: window.width-200
+            Layout.preferredHeight: (window.width-200)*0.3
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
@@ -33,7 +26,7 @@ ScrollView{
                 font.pointSize: 25
             }
         }
-        MusicGridView{
+        MusicGridView{   //专辑列表
             id:musicView
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -65,19 +58,17 @@ ScrollView{
         }
     }
 
-    Component.onCompleted: {
+    Component.onCompleted: { //
         getBannerList()
     }
 
     function getBannerList(){
-
         function onReply(reply){
             http.onReplySignal.disconnect(onReply)
             var banners = JSON.parse(reply).banners //获取网页的图片数据
             bannerView.bannerList = banners
             getRecommendList()
         }
-
         http.onReplySignal.connect(onReply)
         http.connet("banner")
     }
@@ -91,14 +82,12 @@ ScrollView{
         http.onReplySignal.connect(onReply)
         http.connet("/top/playlist/highquality?limit=20") //显示20个歌单
     }
-
     function getLatestList(){
         function onReply(reply){
             http.onReplySignal.disconnect(onReply)
             var latestList = JSON.parse(reply).data
             latestView.list =latestList.slice(0,30)
         }
-
         http.onReplySignal.connect(onReply)
         http.connet("top/song")
     }

@@ -14,7 +14,8 @@ Item {
     RowLayout{
         anchors.fill: parent
         Frame{
-            Layout.preferredWidth: parent.width*0.45
+
+            Layout.preferredWidth: parent.width*0.4
             Layout.fillHeight: true
             Text{
                 id:name
@@ -56,7 +57,7 @@ Item {
             }
         }
         Frame{
-            Layout.preferredWidth: parent.width*0.55
+            Layout.preferredWidth: parent.width*0.6
              Layout.fillHeight: true
 
              MusicLyricsView{

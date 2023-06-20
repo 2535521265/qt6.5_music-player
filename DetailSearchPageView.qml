@@ -15,8 +15,6 @@ ColumnLayout{
             width: parent.width
             height: parent.height
             verticalAlignment: Text.AlignBottom //垂直居中
-//            verticalAlignment: Text.AlignVCenter  //字体上下居中
-//            horizontalAlignment: Text.AlignHCenter  //字体左右居中
 
             text: qsTr("搜索音乐")
             font.family: "微软雅黑"
@@ -67,7 +65,6 @@ ColumnLayout{
         Layout.topMargin: 10
     }
     function doSearch(offset=0,current=0){
-        //         console.log(offset)
         var keywords=searchInput.text
         if(keywords.length<1)return
         function onReply(reply){
@@ -75,7 +72,6 @@ ColumnLayout{
             var result=JSON.parse(reply).result
             musicListView.current=current
             var songsListCount=result.songCount
-            console.log(reply)
             var songsList = result.songs
             musicListView.all=songsListCount
             musicListView.musicList = songsList.map(item=>{  //js遍历
