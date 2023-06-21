@@ -64,7 +64,7 @@ ColumnLayout{
         onLoadMore: doSearch(offset,current)
         Layout.topMargin: 10
     }
-    function doSearch(offset=0,current=0){
+    function doSearch(offset=0,current=0){//current=0,每次搜索返回第一页
         var keywords=searchInput.text
         if(keywords.length<1)return
         function onReply(reply){

@@ -7,11 +7,14 @@ import QtMultimedia
 Rectangle{
     property var playList: []
     property int current: -1
-     property int sliderValue: 0
+    property int sliderValue: 0
     property int sliderFrom: 0
-     property int sliderTo: 100
+    property int sliderTo: 100
     property int currentPlayMode: 0
-    property var playModeList: [{icon:"/single-repeat.png",name:"循环播放"},{icon:"/repeat.png",name:"顺序播放"},{icon:"/random.png",name:"随机播放"}]
+    property var playModeList: [
+        {icon:"/single-repeat.png",name:"循环播放"},
+        {icon:"/repeat.png",name:"顺序播放"},
+        {icon:"/random.png",name:"随机播放"}]
     property bool playBackStateChangeCallbackEnabled: false
     property string musicCover: "qrc/player"
     property string musicName: ""

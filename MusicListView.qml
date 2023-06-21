@@ -32,14 +32,14 @@ Frame{
         model:ListModel{
             id:listViewModel
         }
-        delegate: listViewDelegate
+        delegate: listViewDelegate //获取每个子项
         ScrollBar.vertical: ScrollBar{
             anchors.right: parent.right
 
         }
         header: listViewHeader
-        highlight: Rectangle{
-            color:"#f0f0f0"
+        highlight: Rectangle{ //高亮行颜色 ,改变索引实现
+            color:"lightblue"
         }
         highlightMoveDuration: 0
         highlightResizeDuration: 0
@@ -49,17 +49,17 @@ Frame{
         id:listViewDelegate
         Rectangle{
             id:listViewDelegateItem
-//            color: "#aaa"
-            height: 45
+            color: "#00000000" //列表行背景颜色
+            height: 45 //高度
             width: listView.width
-            Shape{
+            Shape{ //表格线条
                 anchors.fill: parent
                 ShapePath{
-                    strokeWidth: 0
-                    strokeColor: "#500000000"
-                    strokeStyle: ShapePath.SolidLine
+                    strokeWidth: 0  //宽度为0
+                    strokeColor: "#500000000" //表格线条颜色
+                    strokeStyle: ShapePath.SolidLine  //设为实线
                     startX: 0
-                    startY: 45
+                    startY: 45  //与高度一样
                     PathLine{
                         x:0
                         y:45
@@ -71,96 +71,95 @@ Frame{
                 }
             }
 
-             MouseArea{
+            MouseArea{
                 RowLayout{
-                width: parent.width
-                height: parent.height
-                spacing: 15
-                x:5
-                Text{
-                    text:index+1+pageSize*current
-                    horizontalAlignment: Qt.AlignHCenter
-                    Layout.preferredWidth: parent.width*0.05
-                    font.family: "微软雅黑"
-                    font.pointSize: 13
-                    color: "black"
-                    elide:Qt.ElideMiddle//倾斜
-                }
-                Text{
-                    text:name
-//                    horizontalAlignment: Qt.AlignHCenter
-                    Layout.preferredWidth: parent.width*0.4
-                    font.family: "微软雅黑"
-                    font.pointSize: 13
-                    color: "black"
-                    elide:Qt.ElideMiddle//倾斜
-                }
-                Text{
-                    text:artist
-//                    horizontalAlignment: Qt.AlignHCenter
-                    Layout.preferredWidth: parent.width*0.15
-                    font.family: "微软雅黑"
-                    font.pointSize: 13
-                    color: "black"
-                    elide:Qt.ElideMiddle//倾斜
-                }
-                Text{
-                    text:album
-                    horizontalAlignment: Qt.AlignHCenter
-                    Layout.preferredWidth: parent.width*0.15
-                    font.family: "微软雅黑"
-                    font.pointSize: 13
-                    color: "black"
-                    elide:Qt.ElideMiddle//倾斜
-                }
-                Item{
-                    Layout.preferredWidth: parent.width*0.15
-                    RowLayout{
-                        anchors.centerIn: parent
-                        MusicIconButton{
-                            iconSource: "qrc:/images/pause"
-                            iconHeight: 16
-                            iconWidth: 16
-                            toolTip: "播放"
-                            onClicked: {
-                                bottomView.current=-1
-                                bottomView.playList=musicList
-                                bottomView.current=index
-
+                    width: parent.width
+                    height: parent.height
+                    spacing: 15
+                    x:5
+                    Text{
+                        text:index+1+pageSize*current
+                        horizontalAlignment: Qt.AlignHCenter
+                        Layout.preferredWidth: parent.width*0.05
+                        font.family: "微软雅黑"
+                        font.pointSize: 13
+                        color: "black"
+                        elide:Qt.ElideMiddle//超出右侧裁剪
+                    }
+                    Text{
+                        text:name
+                        //horizontalAlignment: Qt.AlignHCenter //居中
+                        Layout.preferredWidth: parent.width*0.4
+                        font.family: "微软雅黑"
+                        font.pointSize: 13
+                        color: "black"
+                        elide:Qt.ElideMiddle
+                    }
+                    Text{
+                        text:artist
+                        //horizontalAlignment: Qt.AlignHCenter
+                        Layout.preferredWidth: parent.width*0.15
+                        font.family: "微软雅黑"
+                        font.pointSize: 13
+                        color: "black"
+                        elide:Qt.ElideMiddle
+                    }
+                    Text{
+                        text:album
+                        horizontalAlignment: Qt.AlignHCenter
+                        Layout.preferredWidth: parent.width*0.15
+                        font.family: "微软雅黑"
+                        font.pointSize: 13
+                        color: "black"
+                        elide:Qt.ElideMiddle
+                    }
+                    Item{
+                        Layout.preferredWidth: parent.width*0.15
+                        RowLayout{
+                            anchors.centerIn: parent
+                            MusicIconButton{
+                                iconSource: "qrc:/images/pause"
+                                iconHeight: 16
+                                iconWidth: 16
+                                toolTip: "播放"
+                                onClicked: {
+                                    bottomView.current=-1
+                                    bottomView.playList=musicList
+                                    bottomView.current=index
+                                }
                             }
-                        }
-                        MusicIconButton{
-                            iconSource: "qrc:/images/favorite"
-                            iconHeight: 16
-                            iconWidth: 16
-                            toolTip: "喜欢"
-                            onClicked: {
+                            MusicIconButton{
+                                iconSource: "qrc:/images/favorite"
+                                iconHeight: 16
+                                iconWidth: 16
+                                toolTip: "喜欢"
+                                onClicked: {
 
+                                }
                             }
-                        }
-                        MusicIconButton{
-                            iconSource: "qrc:/images/clear"
-                            iconHeight: 16
-                            iconWidth: 16
-                            toolTip: "删除"
-                            onClicked: {
+                            MusicIconButton{
+                                iconSource: "qrc:/images/clear"
+                                iconHeight: 16
+                                iconWidth: 16
+                                toolTip: "删除"
+                                onClicked: {
 
+                                }
                             }
                         }
                     }
                 }
-            }
                 anchors.fill: parent
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-                onEntered: {
-                    color="#f0f0f0"
+                onEntered: {  //列表行鼠标悬停颜色
+                    color="lightblue"//移入
                 }
                 onExited: {
-                    color="#00000000"
+                    color="#00000000"//移出
                 }
                 onClicked: {
-                    listViewDelegateItem.listView.view.currentIndex=index
+                    listView.currentIndex=index //改变选定,实现高亮切换
                 }
             }
 
@@ -185,7 +184,6 @@ Frame{
                     font.family: "微软雅黑"
                     font.pointSize: 13
                     color: "white"
-                    elide:Qt.ElideRight//倾斜
                 }
                 Text{
                     text:"歌名"
@@ -193,16 +191,15 @@ Frame{
                     font.family: "微软雅黑"
                     font.pointSize: 13
                     color: "white"
-                    elide:Qt.ElideMiddle//倾斜
+                    elide:Qt.ElideRight //字数多的省略在右边...
                 }
                 Text{
                     text:"歌手"
-//                    horizontalAlignment: Qt.AlignHCenter
                     Layout.preferredWidth: parent.width*0.15
                     font.family: "微软雅黑"
                     font.pointSize: 13
                     color: "white"
-                    elide:Qt.ElideMiddle//倾斜
+                    elide:Qt.ElideMiddle//字数多的省略在中间...
                 }
                 Text{
                     text:"专辑"
@@ -211,7 +208,7 @@ Frame{
                     font.family: "微软雅黑"
                     font.pointSize: 13
                     color: "white"
-                    elide:Qt.ElideMiddle//倾斜
+                    elide:Qt.ElideMiddle
                 }
                 Text{
                     text:"操作"
@@ -220,7 +217,7 @@ Frame{
                     font.family: "微软雅黑"
                     font.pointSize: 13
                     color: "white"
-                    elide:Qt.ElideRight//倾斜
+                    elide:Qt.ElideMiddle
                 }
             }
         }
@@ -228,7 +225,6 @@ Frame{
 
     Item {  //分页器
         id: pageButton
-        visible: musicList.length!==0&&all!==0            //不显示分页
         width: parent.width
         anchors.top: listView.bottom
         height: 40
