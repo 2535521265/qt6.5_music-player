@@ -110,7 +110,7 @@ Rectangle{
 
             Text {
                 id:timeTxet
-                text: qsTr("00:00/.5:30")
+                text: qsTr("00:00/00:00")
                 anchors.right: slider.right
                 anchors.bottom: slider.top
                 font.family: "微软雅黑"
@@ -158,7 +158,7 @@ Rectangle{
             toolTip: "点击速度+0.25，默认为1,最大为2"
             onClicked: {
                 mediaPlayer.playbackRate+=0.25
-                if(mediaPlayer.playbackRate===1){
+                if(mediaPlayer.playbackRate===1.0){
                     m.toolTip="1.0"
                 }
                 if(mediaPlayer.playbackRate===1.25){
@@ -343,12 +343,9 @@ Rectangle{
             function onReply(reply){
                 http.onReplySignal.disconnect(onReply)
                 var lyric = JSON.parse(reply).lrc.lyric
-
-                console.log(lyric)
-
                 if(lyric.length<1) return
                 var lyrics = (lyric.replace(/\[.*\]/gi,"")).split("\n")
-                if(lyrics.length>0) pageDetailView.lyrics = lyrics
+                if(lyric.length>0) pageDetailView.lyrics = lyrics
                 var times = []
                 lyric.replace(/\[.*\]/gi,function(match,index){
                     if(match.length>2){
@@ -361,6 +358,7 @@ Rectangle{
                         times.push(timeValue)
                     }
                 })
+                mediaPlayer.times=times
             }
             http.onReplySignal.connect(onReply)
             http.connet("lyric?id="+id)
