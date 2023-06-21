@@ -53,7 +53,7 @@ ApplicationWindow {
     MediaPlayer{
            id:mediaPlayer
            audioOutput: AudioOutput{volume: bottomView.voice.value} //音量绑定滑动条
-           property var  times: []
+           property var times: []
            onPositionChanged: {    //音乐进度和进度条同步
                bottomView.setSlider(0,duration,mediaPlayer.position)
                //歌词滚动

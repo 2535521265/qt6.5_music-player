@@ -32,7 +32,7 @@ Rectangle {
         id:listDelegate
         Item {
             id: delegateItem
-            width: parent.width
+            width: 660
             height: 50
             Text{
                 text: modelData
@@ -53,6 +53,9 @@ Rectangle {
             MouseArea{
                 anchors.fill: parent
                 onCanceled: list.currentIndex=index
+                onClicked: {
+
+                }
             }
         }
     }
