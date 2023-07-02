@@ -262,8 +262,10 @@ Rectangle{
 
     function playMusic(){//播放按钮
         if(current<0)return
+        if(playList.length<current+1) return
         //获取播放链接
         getUrl()
+        saveHistory(current)
     }
 
     function getUrl(){
@@ -363,7 +365,29 @@ Rectangle{
                 })
                 mediaPlayer.times=times
             }
-            http.onReplySignal.connect(onReply)
-            http.connet("lyric?id="+id)
+        http.onReplySignal.connect(onReply)
+        http.connet("lyric?id="+id)
+    }
+    function saveHistory(index = 0){
+        if(playList.length<index+1) return
+        var item  = playList[index]
+        var history =  historySettings.value("history",[])
+        var i =  history.findIndex(value=>value.id===item.id)
+        if(i>=0){
+            history.slice(i,1)
         }
+        history.unshift({
+                            id:item.id+"",
+                            name:item.name+"",
+                            artist:item.artist+"",
+                            url:item.url?item.url:"",
+                            type:item.type?item.type:"",
+                            album:item.album?item.album:"本地音乐"
+                        })
+        if(history.length>500){
+            //限制五百条数据
+            history.pop()
+        }
+        historySettings.setValue("history",history)
+    }
 }
