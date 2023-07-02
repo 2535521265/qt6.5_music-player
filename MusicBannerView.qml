@@ -11,7 +11,7 @@ Frame{
     background: Rectangle{  //透明色去掉边框
         color: "#00000000"
     }
-    PathView{
+    PathView{////轮播视图显示
         id:bannerView
         width: parent.width
         height: parent.height
@@ -22,7 +22,7 @@ Frame{
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
-            onEntered: {  //鼠标停在上面时，停止轮播图自动滚动。鼠标移开时，重新开始自动滚动
+            onEntered: {  //鼠标停在上面时，停止轮播图自动计时。鼠标移开时，重新开始自动计时
                 bannerTimer.stop()
             }
             onExited: {

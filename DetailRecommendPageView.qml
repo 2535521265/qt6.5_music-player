@@ -8,8 +8,8 @@ ScrollView{
     ColumnLayout {
         MusicBannerView{    //主窗口的轮播图
             id:bannerView
-            Layout.preferredWidth: window.width-200
-            Layout.preferredHeight: (window.width-200)*0.3
+            Layout.preferredWidth: window.width-200 //轮播图长度
+            Layout.preferredHeight: (window.width-200)*0.3  //轮播图宽度
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
