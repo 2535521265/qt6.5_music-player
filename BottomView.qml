@@ -265,11 +265,22 @@ Rectangle{
         if(current<0)return
         if(playList.length<current+1) return
         //获取播放链接
-        getUrl()
+        if(playList[current].type==="1"){
+            playLocalMusic()
+        }else{
+            playWebMusic()
+        }
         saveHistory(current)
     }
+    function playLocalMusic(){
+        var currentItem = playList[current]
+             mediaPlayer.source =currentItem.url
+             mediaPlayer.play()
+             musicName = currentItem.name
+             musicArtist = currentItem.artist
+    }
 
-    function getUrl(){
+    function playWebMusic(){
         if(playList.length<current+1)return
         var id=playList[current].id
 

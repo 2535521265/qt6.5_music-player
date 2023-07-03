@@ -5,6 +5,7 @@ import myhttp 1.0
 import QtMultimedia
 import Qt.labs.settings
 
+
 //主界面
 ApplicationWindow {
 
@@ -59,7 +60,11 @@ ApplicationWindow {
 
     MediaPlayer{
            id:mediaPlayer
+           property var title:[]
+           property var artist:[]
+           property var album:[]
            audioOutput: AudioOutput{volume: bottomView.voice.value} //音量绑定滑动条
+
            property var times: []
            onPositionChanged: {    //音乐进度和进度条同步
                bottomView.setSlider(0,duration,mediaPlayer.position)
@@ -69,15 +74,24 @@ ApplicationWindow {
                    pageDetailView.current=(count===0)?0:count-1
                }
            }
-
            onPlaybackStateChanged: {     //辅助切换上一首，下一首
                bottomView.playingState=playbackState===MediaPlayer.PlayingState?1:0
                if(playbackState===MediaPlayer.StoppedState&&bottomView.playBackStateChangeCallbackEnabled)
                    bottomView.playNext()
-
-
            }
-       }
+
+
+           onMetaDataChanged: {
+                title = metaData.stringValue(0)
+                artist = metaData.stringValue(20)
+                album = metaData.stringValue(18)
+
+               console.log("Title:", title)
+               console.log("Artist:", artist)
+               console.log("Album:", album)
+           }
+
+    }
 
     //实现无边框
 //    flags: Qt.Window|Qt.FramelessWindowHint
