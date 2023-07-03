@@ -1,8 +1,7 @@
-import QtQuick
+import QtQuick 2.15
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQml
-
 
 RowLayout{
 
@@ -91,17 +90,8 @@ RowLayout{
                         color: "#ffffff"
                     }
                 }
-
-                MouseArea{
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onEntered: {//鼠标移入ui的颜色
-                        color="#aa73a7ab"
-                    }
-                    onExited: {//鼠标移出ui的颜色
-                        color="#AA00AAAA"
-                    }
-                    onClicked:{//实现鼠标点击切换不同ui
+                TapHandler{
+                    onTapped:{
                         hidePlayList()
                         repeater.itemAt(menuViewDelegateItem.ListView.view.currentIndex).visible =false
                         menuViewDelegateItem.ListView.view.currentIndex = index

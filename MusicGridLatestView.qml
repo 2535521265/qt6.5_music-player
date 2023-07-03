@@ -57,18 +57,8 @@ Item{
                     width: parent.width*0.72
                     elide: Qt.ElideRight
                 }
-
-
-                MouseArea{
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onEntered: {
-                        background.color = "#50000000"
-                    }
-                    onExited: {
-                        background.color = "#00000000"
-                    }
+                TapHandler{
+                   cursorShape: Qt.PointingHandCursor
                 }
             }
         }

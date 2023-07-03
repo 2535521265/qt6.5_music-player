@@ -43,22 +43,13 @@ Item {
 
                 }
 
-                MouseArea{
-                    anchors.fill: parent
-                    hoverEnabled: true  //鼠标悬浮效果
-                    cursorShape: Qt.PointingHandCursor //鼠标显示手型
-                    onEntered: {
-                        background.color = "#50000000"//鼠标移入变色
-                    }
-                    onExited: {
-                        background.color = "#00000000"
-                    }
-                    onClicked: {
+                TapHandler{
+                    //cursorShape: Qt.PointingHandCursor //鼠标显示手型
+                    onTapped: {
                         var item = gridRepeator.model[index]
                         homeView.showPlayList(item.id,"1000")
-                        }
-
                     }
+                }
                 }
             }
     }

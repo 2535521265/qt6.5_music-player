@@ -50,12 +50,8 @@ Rectangle {
                     scale:1.2
                 }
             }
-            MouseArea{
-                anchors.fill: parent
+            TapHandler{
                 onCanceled: list.currentIndex=index
-                onClicked: {
-
-                }
             }
         }
     }

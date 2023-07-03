@@ -144,28 +144,6 @@ ToolBar{
                 font.bold: true
             }
         }
-
-//        MouseArea {
-//            anchors.fill: parent
-//            acceptedButtons: Qt.LeftButton
-//            hoverEnabled: true
-//            property int startX: 0
-//            property int startY: 0
-//            onPositionChanged: {
-//                if (mouse.buttons === Qt.LeftButton) {
-//                    aboutPop.x += mouse.x - startX
-//                    aboutPop.y += mouse.y - startY
-//                }
-//            }
-//            onPressed: {
-//                startX = mouse.x
-//                startY = mouse.y
-//            }
-//            onReleased: {
-//                startX = 0
-//                startY = 0
-//            }
-//        }
     }
 
 
