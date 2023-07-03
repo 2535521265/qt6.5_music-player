@@ -71,8 +71,7 @@ Frame{
                 }
             }
 
-            MouseArea{
-                RowLayout{
+            RowLayout{
                     width: parent.width
                     height: parent.height
                     spacing: 15
@@ -156,16 +155,10 @@ Frame{
                         }
                     }
                 }
-                anchors.fill: parent
-                hoverEnabled: true
+
+            TapHandler{
                 cursorShape: Qt.PointingHandCursor
-                onEntered: {  //列表行鼠标悬停颜色
-                    color="lightblue"//移入
-                }
-                onExited: {
-                    color="#00000000"//移出
-                }
-                onClicked: {
+                onTapped: {
                     listView.currentIndex=index //改变选定,实现高亮切换
                 }
             }
