@@ -29,6 +29,10 @@ ApplicationWindow {
             id:historySettings
             fileName: "conf/history.ini"
         }
+    Settings{
+            id:favoriteSettings
+            fileName: "conf/favorite.ini"
+        }
     ColumnLayout{
         anchors.fill: parent
         TopView{

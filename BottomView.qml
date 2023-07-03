@@ -146,6 +146,7 @@ Rectangle{
             Layout.preferredWidth: 50
             icon.source: "qrc:/images/favorite.png"
             toolTip: "我喜欢"
+            onClicked: saveFavorite(playList[current])
         }
         MusicIconButton{  //
             Layout.preferredWidth: 50
@@ -374,7 +375,7 @@ Rectangle{
         var history =  historySettings.value("history",[])
         var i =  history.findIndex(value=>value.id===item.id)
         if(i>=0){
-            history.slice(i,1)
+            history.splice(i,1)
         }
         history.unshift({
                             id:item.id+"",
@@ -389,5 +390,26 @@ Rectangle{
             history.pop()
         }
         historySettings.setValue("history",history)
+    }
+
+    function saveFavorite(value={}){
+        var favorite =  favoriteSettings.value("favorite",[])
+        var i =  favorite.findIndex(item=>value.id===item.id)
+        if(i>=0){
+            favorite.splice(i,1)
+        }
+        favorite.unshift({
+                            id:value.id+"",
+                            name:value.name+"",
+                            artist:value.artist+"",
+                            url:value.url?value.url:"",
+                            type:value.type?value.type:"",
+                            album:value.album?value.album:"本地音乐"
+                        })
+        if(favorite.length>500){
+            //限制五百条数据
+            favorite.pop()
+        }
+        favoriteSettings.setValue("favorite",favorite)
     }
 }

@@ -15,7 +15,7 @@ ColumnLayout{
             x:10
             verticalAlignment: Text.AlignBottom
             text: qsTr("历史播放")
-            font.family: window.mFONT_FAMILY
+            font.family: "微软雅黑"
             font.pointSize: 25
         }
     }

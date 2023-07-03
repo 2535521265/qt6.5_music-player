@@ -134,8 +134,15 @@ Frame{
                                 iconWidth: 16
                                 toolTip: "喜欢"
                                 onClicked: {
-
-                                }
+                                    bottomView.saveFavorite({
+                                                                id:musicList[index].id,
+                                                                name:musicList[index].name,
+                                                                artist:musicList[index].artist,
+                                                                url:musicList[index].url?musicList[index].url:"",
+                                                                album:musicList[index].album,
+                                                                type:musicList[index].type?musicList[index].type:"0"
+                                                           })
+                                        }
                             }
                             MusicIconButton{
                                 iconSource: "qrc:/images/clear"
