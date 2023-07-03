@@ -4,6 +4,9 @@ project(music_player VERSION 0.1 LANGUAGES CXX)
 
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
 
+#find_package(Taglib REQUIRED)
+
+
 qt_standard_project_setup()
 
 qt_add_executable(appmusic_player)

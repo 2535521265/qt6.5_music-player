@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QIcon>
+#include<QQmlContext>
 #include"http.h"
 int main(int argc, char *argv[])
 {
