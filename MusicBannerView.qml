@@ -6,8 +6,6 @@ import QtQuick.Layouts
 Frame{
     property int current: 0
     property alias bannerList : bannerView.model
-
-
     background: Rectangle{  //透明色去掉边框
         color: "#00000000"
     }
@@ -15,21 +13,10 @@ Frame{
         id:bannerView
         width: parent.width
         height: parent.height
-
         clip: true //裁剪多出部分
-
-        MouseArea{
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            onEntered: {  //鼠标停在上面时，停止轮播图自动计时。鼠标移开时，重新开始自动计时
-                bannerTimer.stop()
-            }
-            onExited: {
-                bannerTimer.start()
-            }
+        TapHandler{
+             cursorShape: Qt.PointingHandCursor
         }
-
         delegate: Item{
             id:delegateItem
             width:bannerView.width*0.7
@@ -44,35 +31,35 @@ Frame{
                 height: delegateItem.height
             }
 
-            MouseArea{
-                anchors.fill: parent
+            TapHandler{
                 cursorShape: Qt.PointingHandCursor  //鼠标悬停时的光标形状为手型
-                onClicked: { //点击实现切换轮播图
-                    if(bannerView.currentIndex === index){
-                        var item = bannerView.model[index]
-                        var targetId = item.targetId+""
-                        var targetType = item.targetType+""
-
-                        switch(targetType){
-                        case "1":
-                            //播放歌曲
-                            bottomView.current=-1
-                            bottomView.playList=[{id:targetId,name:"",artist:"",cover:"",album:""}]
-                            bottomView.current=0
-                            break
-                        case "10":
-                            //打开专辑
-//                            break
-                        case "1000":
-                            //打开播放列表
-                            homeView.showPlayList(targetId,targetType)
-                            break
+                onTapped: {
+                    onClicked: { //点击实现切换轮播图
+                        if(bannerView.currentIndex === index){
+                            var item = bannerView.model[index]
+                            var targetId = item.targetId+""
+                            var targetType = item.targetType+""
+                            switch(targetType){
+                            case "1":
+                                //播放歌曲
+                                bottomView.current=-1
+                                bottomView.playList=[{id:targetId,name:"",artist:"",cover:"",album:""}]
+                                bottomView.current=0
+                                break
+                            case "10":
+                                //打开专辑
+    //                            break
+                            case "1000":
+                                //打开播放列表
+                                homeView.showPlayList(targetId,targetType)
+                                break
+                            }
+                            console.log(targetId,targetType)
+                        }else{
+                            bannerView.currentIndex = index
                         }
-                        console.log(targetId,targetType)
-                    }else{
-                        bannerView.currentIndex = index
-                    }
 
+                    }
                 }
             }
         }

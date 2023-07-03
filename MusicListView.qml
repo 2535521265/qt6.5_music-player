@@ -169,9 +169,7 @@ Frame{
                     listView.currentIndex=index //改变选定,实现高亮切换
                 }
             }
-
         }
-
     }
     Component{
         id:listViewHeader
