@@ -52,7 +52,7 @@ Frame{
         id:listViewDelegate
         Rectangle{
             id:listViewDelegateItem
-            color: "lightblue" //列表行背景颜色
+            color: "#00000000" //列表行背景颜色
             height: 45 //高度
             width: listView.width
             Shape{ //表格线条

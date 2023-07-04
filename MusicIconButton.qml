@@ -23,7 +23,7 @@ Button{
     ToolTip.text: toolTip
 
     background: Rectangle{  //定义按钮的背景样式，颜色根据按钮状态不同而变化
-        color: self.down||(isCheckable&&self.checked)?"#497563":"#20e9f4ff"
+        color: self.down||(isCheckable&&self.checked)?"#497563":"grey"
         radius: 3
     }
     icon.color: self.down||(isCheckable&&self.checked)?"red":"white"
