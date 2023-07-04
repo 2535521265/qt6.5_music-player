@@ -1,3 +1,8 @@
+/*
+ * 2021051205101tianfu
+ * 2021051615038gongqin
+ * 2021051615042dengyuexin
+ * */
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -16,7 +21,7 @@ ToolBar{
         anchors.fill: parent
         Text {
             id: musicName
-            text: qsTr("闲暇音乐")
+            text: qsTr("音乐播放器")
             font.family: "微软雅黑"
             font.pointSize: 28
         }

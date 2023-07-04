@@ -1,3 +1,6 @@
+/*
+ * 2021051615038gongqin
+ * */
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -49,7 +52,7 @@ Frame{
         id:listViewDelegate
         Rectangle{
             id:listViewDelegateItem
-            color: "#00000000" //列表行背景颜色
+            color: "lightblue" //列表行背景颜色
             height: 45 //高度
             width: listView.width
             Shape{ //表格线条

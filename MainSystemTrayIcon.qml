@@ -1,3 +1,6 @@
+/*
+ * 2021051205101tianfu
+ * */
 import Qt.labs.platform 1.0
 import QtQuick.Controls
 

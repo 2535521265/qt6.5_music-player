@@ -1,3 +1,8 @@
+/*
+ * 2021051205101tianfu
+ * 2021051615038gongqin
+ * 2021051615042dengyuexin
+ * */
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QIcon>
