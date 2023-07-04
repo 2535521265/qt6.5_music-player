@@ -1,12 +1,10 @@
-//DetailPlayListPageView.qml
-
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.12
 
 ColumnLayout{
     property string targetId: ""
-    property string targetType: "10"//album,playList/detail
+    property string targetType: "10"
     property string name: "-"
 
     onTargetIdChanged:{

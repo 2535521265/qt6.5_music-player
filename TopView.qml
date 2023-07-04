@@ -5,9 +5,11 @@ import QtQuick.Dialogs
 
 //顶部菜单栏
 ToolBar{
+    property point point: Qt.point(x,y)
+
     background: Rectangle{
-                color: "#00AAAA"
-            }
+        color: "#00AAAA"
+    }
     width: parent.width
     Layout.fillWidth: true
     RowLayout{
@@ -27,18 +29,18 @@ ToolBar{
             toolTip: "关于"
             onClicked: {
                 aboutPop.open()
-               }
-        }
-        MusicToolButton{
-            id:smallwindow
-            icon.source: "qrc:/images/small-window.png"
-            toolTip: "小窗播放"
-            onClicked: {
-                setWindowSize(350,600)
-                smallwindow.visible = false
-                normalwindow.visible = true
             }
         }
+        //        MusicToolButton{
+        //            id:smallwindow
+        //            icon.source: "qrc:/images/small-window.png"
+        //            toolTip: "小窗播放"
+        //            onClicked: {
+        //                setWindowSize(350,600)
+        //                smallwindow.visible = false
+        //                normalwindow.visible = true
+        //            }
+        //        }
         MusicToolButton{
             id:normalwindow
             icon.source: "qrc:/images/exit-small-window.png"
@@ -53,6 +55,13 @@ ToolBar{
         Item {
             Layout.fillWidth: true
             height: 30
+            MouseArea{
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton
+                onPressed:  setPoint(mouseX,mouseY)
+                onMouseXChanged: moveX(mouseX)
+                onMouseYChanged: moveY(mouseY)
+            }
         }
         MusicToolButton{
             icon.source: "qrc:/images/minimize-screen.png"
@@ -152,6 +161,25 @@ ToolBar{
         window.width = width
         window.x=(Screen.width-window.width)/2
         window.y=(Screen.height-window.height)/2
+    }
+
+    //实现点击工具栏拖动窗口
+    function setPoint(mouseX =0 ,mouseY = 0){
+        point =Qt.point(mouseX,mouseY)
+        console.log(mouseX,mouseY)
+    }
+
+    function moveX(mouseX = 0 ){
+        var x = window.x + mouseX-point.x
+        if(x<-(window.width-70)) x = - (window.width-70)
+        if(x>Screen.desktopAvailableWidth-70) x = Screen.desktopAvailableWidth-70
+        window.x = x
+    }
+    function moveY(mouseY = 0 ){
+        var y = window.y + mouseY-point.y
+        if(y<=0) y = 0
+        if(y>Screen.desktopAvailableHeight-70) y = Screen.desktopAvailableHeight-70
+        window.y = y
     }
 }
 

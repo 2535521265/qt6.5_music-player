@@ -94,14 +94,9 @@ ApplicationWindow {
     }
 
     //实现无边框
-//    flags: Qt.Window|Qt.FramelessWindowHint
+    flags: Qt.Window|Qt.FramelessWindowHint
 
-    //实现鼠标拖动窗口
-//    DragHandler{
-//        onActiveChanged: {
-//            if(active){
-//                window.startSystemMove()
-//            }
-//        }
-//    }
+    MainSystemTrayIcon{
+
+        }
 }

@@ -56,6 +56,7 @@ Rectangle{
             onClicked:playNext('')
         }
         Item{   //进度条
+            visible: !layoutHeaderView.isSmallWindow
             Layout.preferredWidth: parent.width/2
             Layout.fillHeight: true
             Layout.fillWidth: true
@@ -121,6 +122,7 @@ Rectangle{
             }
         }
         MusicBorderImage{
+            visible: !layoutHeaderView.isSmallWindow
             width: 50
             height: 45
             imgSrc: musicCover
@@ -156,9 +158,9 @@ Rectangle{
         }
         MusicIconButton{  //变速播放音乐
             id:m
-            Layout.preferredWidth: 100
-            height: 200
-            text:"播放速度"
+            Layout.preferredWidth: 50
+            //text:"播放速度"
+            icon.source: "qrc:/images/next.png"
             toolTip: "点击速度+0.25，默认为1,最大为2"
             onClicked: {
                 mediaPlayer.playbackRate+=0.25
@@ -183,21 +185,23 @@ Rectangle{
             }
         }
 
-        Row{     //音量调节           
+        Row{     //音量调节
+            Label{
+                text: "音量"+Math.round(voice.value)
+
+            }
             Slider{
                 id:voice
                 from:0
                 to:100
                 value:50
-                orientation: Qt.Vertical
-                width: 10
-                height: 45
+                //orientation: Qt.Vertical
+                orientation: Qt.Horizontal // 方向更改为水平
+                width: 200
+                height: 10
                 onValueChanged: {
                     mediaPlayer.audioOutput.volume=value/100
                 }
-            }
-            Label{
-                text: "音量"+Math.round(voice.value)
             }
         }
 
